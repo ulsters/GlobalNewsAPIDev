@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GlobalNewsAPI.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240317122812_initalPoint")]
-    partial class initalPoint
+    [Migration("20240323133129_startPoint")]
+    partial class startPoint
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,6 +141,10 @@ namespace GlobalNewsAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserDtoId"), 1L, 1);
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

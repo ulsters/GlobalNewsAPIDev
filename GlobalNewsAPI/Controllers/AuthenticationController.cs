@@ -13,7 +13,7 @@ namespace GlobalNewsAPI.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        public static User user = new User();
+        public static Users user = new Users();
         private readonly IConfiguration _configuration;
         private readonly RepositoryContext _context;
 
@@ -24,15 +24,18 @@ namespace GlobalNewsAPI.Controllers
             
         }
 
-
         [HttpPost("register")]
-        public ActionResult<User> Register(UserDto request)
+        public ActionResult<Users> Register(UserDto request)
         {
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-            var newUser = new User
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            string userRegisterDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
+
+            var newUser = new Users
             {
                 Username = request.Username,
+                Password = request.Password,
+                UserEmail = request.UserEmail,
                 PasswordHash = passwordHash
             };
 
@@ -43,9 +46,11 @@ namespace GlobalNewsAPI.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<User> Login(UserDto request)
+        public ActionResult<string> Login(UserDto request)
         {
-            if(user.Username != request.Username)
+            var user = _context.Users.FirstOrDefault(u => u.Username == request.Username);
+
+            if (user == null)
             {
                 return BadRequest("User not found.");
             }
@@ -57,10 +62,10 @@ namespace GlobalNewsAPI.Controllers
 
             string token = CreateToken(user);
 
-                return Ok(token);
+            return Ok(token);
         }
 
-        private string CreateToken(User user)
+        private string CreateToken(Users user)
         {
             List<Claim> claims = new List<Claim>
             {

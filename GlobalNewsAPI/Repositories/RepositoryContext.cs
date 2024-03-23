@@ -11,7 +11,7 @@ namespace GlobalNewsAPI.Repositories
             
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Countries> Countries { get; set; }
         public DbSet<UserComments> UserComments { get; set; }
         public DbSet<News> News { get; set; }
