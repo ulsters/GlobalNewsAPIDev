@@ -1,6 +1,8 @@
-﻿using System.Diagnostics.Eventing.Reader;
+﻿using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using GlobalNewsAPI.Models;
 using GlobalNewsAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +10,7 @@ namespace GlobalNewsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class NewsController : ControllerBase
     {
         private readonly RepositoryContext _context;
@@ -118,11 +121,6 @@ namespace GlobalNewsAPI.Controllers
 
                 throw new Exception(ex.Message);
             }
-
-
-
-
-
 
         }
 
