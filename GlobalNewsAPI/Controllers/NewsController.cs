@@ -10,7 +10,7 @@ namespace GlobalNewsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles ="Admin")]
+    
     public class NewsController : ControllerBase
     {
         private readonly RepositoryContext _context;
